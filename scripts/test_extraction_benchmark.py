@@ -101,3 +101,4 @@ def run_extraction_benchmark():
 
 if __name__ == "__main__":
     acc = run_extraction_benchmark()
+

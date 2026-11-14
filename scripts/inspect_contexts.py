@@ -28,3 +28,4 @@ for c in contexts[:20]:
     p_text = period.get_text(strip=True) if period else ""
     ctx_map[cid] = p_text
     print(f"Context {cid}: {p_text}")
+

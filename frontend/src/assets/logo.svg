@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" fill="none">
+  <defs>
+    <linearGradient id="metal" x1="330" y1="40" x2="870" y2="390" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7FAFF"/>
+      <stop offset=".28" stop-color="#AEBBD0"/>
+      <stop offset=".58" stop-color="#E7EDF7"/>
+      <stop offset="1" stop-color="#7185A6"/>
+    </linearGradient>
+    <linearGradient id="orbit" x1="270" y1="100" x2="920" y2="330" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7185A6"/>
+      <stop offset=".5" stop-color="#F5F8FF"/>
+      <stop offset="1" stop-color="#8FA2C0"/>
+    </linearGradient>
+    <linearGradient id="word" x1="260" y1="350" x2="940" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DCE5F2"/>
+      <stop offset=".5" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#AAB9D0"/>
+    </linearGradient>
+  </defs>
+  <!-- Symbol: architectural M with ascending financial bars -->
+  <path d="M442 238V83H493L600 190L707 83H758V238H704V157L600 261L496 157V238H442Z" fill="url(#metal)"/>
+  <g fill="url(#metal)">
+    <rect x="578" y="205" width="13" height="37" rx="2"/>
+    <rect x="603" y="185" width="13" height="57" rx="2"/>
+    <rect x="628" y="164" width="13" height="78" rx="2"/>
+    <rect x="653" y="142" width="13" height="100" rx="2"/>
+  </g>
+  <g stroke="url(#metal)" stroke-width="3" stroke-linecap="round">
+    <path d="M584.5 195V184M609.5 175V163M634.5 154V142M659.5 132V120"/>
+  </g>
+  <!-- Orbit / rising trajectory -->
+  <path d="M337 264C452 245 552 220 649 151C722 99 785 69 851 60C817 93 777 127 727 163C619 241 510 281 337 264Z" fill="url(#orbit)" opacity=".96"/>
+  <path d="M344 265C504 258 628 207 736 129C786 93 820 70 851 60" stroke="#F8FBFF" stroke-width="2.4" stroke-linecap="round" opacity=".8"/>
+  <!-- Wordmark -->
+  <g fill="url(#word)" font-family="Montserrat, Avenir Next, Arial, sans-serif" font-size="91" font-weight="500" letter-spacing="17">
+    <text x="216" y="390">MONETA</text>
+  </g>
+  <path d="M330 425H870" stroke="url(#orbit)" stroke-width="1.5" opacity=".85"/>
+  <path d="M600 416L608 425L600 434L592 425L600 416Z" fill="url(#metal)"/>
+  <text x="600" y="476" text-anchor="middle" fill="#C4D0E2" font-family="Montserrat, Avenir Next, Arial, sans-serif" font-size="18" font-weight="500" letter-spacing="9">AUDIT  •  ANALYZE  •  ENSURE</text>
+</svg>

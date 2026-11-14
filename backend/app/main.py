@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from backend.app.config import settings
 from backend.app.database import engine, Base
-from backend.app.api import health, companies, audit
+from backend.app.api import health, companies, audit, analyze, auth, ai
 
 # Initialize tables
 Base.metadata.create_all(bind=engine)
@@ -33,6 +33,9 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(companies.router)
 app.include_router(audit.router)
+app.include_router(analyze.router)
+app.include_router(auth.router)
+app.include_router(ai.router)
 
 # Mount built frontend if available
 FRONTEND_DIST = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"

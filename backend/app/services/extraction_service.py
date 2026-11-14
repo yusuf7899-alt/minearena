@@ -383,7 +383,7 @@ class ExtractionService:
                             # Exclude current assets/liabilities if looking for total
                             if concept in ["TOTAL_ASSETS", "TOTAL_LIABILITIES"] and "current" in label:
                                 continue
-                            if concept == "TOTAL_LIABILITIES" and "equity" in label:
+                            if concept == "TOTAL_LIABILITIES" and ("equity" in label or "other" in label or "lease" in label):
                                 continue
                             keywords = CONCEPT_KEYWORDS.get(concept, [])
                             matched_kw = any(kw == label or (kw in label and len(label) < len(kw) + 15) for kw in keywords)
@@ -448,6 +448,10 @@ class ExtractionService:
 
                 label = cells[0].lower()
                 for concept in list(concepts_to_find):
+                    if concept in ["TOTAL_ASSETS", "TOTAL_LIABILITIES"] and "current" in label:
+                        continue
+                    if concept == "TOTAL_LIABILITIES" and ("equity" in label or "other" in label or "lease" in label):
+                        continue
                     keywords = CONCEPT_KEYWORDS.get(concept, [])
                     for kw in keywords:
                         if kw == label or (kw in label and len(label) < len(kw) + 15):

@@ -22,3 +22,4 @@ for idx, tbl in enumerate(tables):
             row_vals = [td.get_text(strip=True) for td in r.find_all(["td", "th"]) if td.get_text(strip=True)]
             if row_vals:
                 print("  ", row_vals[:5])
+

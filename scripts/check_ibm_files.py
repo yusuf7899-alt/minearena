@@ -12,3 +12,4 @@ print("Directory listing status:", res.status_code)
 files = re.findall(r'href=[\'"]([^\'"]+)[\'"]', res.text)
 matching_files = [f for f in files if f.endswith('.htm') or f.endswith('.txt') or 'ex' in f.lower()]
 print("Matching files:", matching_files)
+

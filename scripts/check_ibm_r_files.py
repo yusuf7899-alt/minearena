@@ -19,3 +19,4 @@ for r_name in ['R1.htm', 'R2.htm', 'R3.htm', 'R4.htm', 'R5.htm', 'R6.htm']:
         rows = soup.find_all('tr')[:4]
         for r in rows:
             print("   Row:", [c.get_text(strip=True) for c in r.find_all(['td', 'th']) if c.get_text(strip=True)])
+

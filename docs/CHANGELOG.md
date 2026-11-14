@@ -4,6 +4,29 @@ All notable changes to the Moneta project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - External integration configuration
+
+### Added
+- Added backend environment templates and a local, Git-ignored backend `.env` for required and optional provider settings.
+- Added a secret-safe configuration readiness report; provider connectivity and Gemini model availability are explicitly marked untested.
+- Configured SEC base and archive URLs through environment variables without changing filing analysis behavior.
+- Documented provider setup, OAuth publishing requirements, backend-only secrets, and optional OCR/fallback configuration.
+
+## [1.2.0-demo] - 2026-11-12 - End-to-End Moneta Working Demo for Judges
+
+### Added
+- **Unified Pipeline API (`POST /api/analyze`):** Orchestrates end-to-end processing in a single call: resolves company CIK, fetches SEC EDGAR 10-K primary document, ingests XBRL CompanyFacts ground truth, extracts 9 statutory financial metrics, evaluates 6 accounting tie-out checks with dynamic planning materiality, scores confidence, and applies auditor decisions.
+- **Accounting Integrity Engine (`backend/app/services/accounting_engine.py`):** Evaluates Fundamental Balance Sheet Identity ($A = L + E$), Retained Earnings Roll-Forward Bridge, Cash Flow to Cash & Equivalents tie-out, Operating Cash Flow vs Net Income, Gross Profit ($Revenues - COGS$), and Planning Materiality ($5\%$ Pre-Tax Income) with Tolerable Misstatement ($75\%$ PM).
+- **Seeded Error Injection Mode:** Controlled demo injection mode demonstrating real-time anomaly detection with 3 deterministic scenarios: Balance Sheet Tamper (+$15B fictitious asset), Gross Profit Understatement (-$12B), and Retained Earnings discrepancy (+$10B).
+- **Multi-Factor Confidence Scoring (`backend/app/services/confidence_service.py`):** Calibrated multi-factor scoring ($0.0 - 1.0$) using extraction method, XBRL concordance, period matching, and tie-out consistency. Auto-approves metrics $\ge 0.85$ and escalates doubtful ones to the senior auditor review queue.
+- **5-Tab Professional Workbench UI (`frontend/src/App.tsx`):** Complete human-in-the-loop auditor workspace with:
+  - Tab 1: SEC Ingestion & Filing Metadata + Four-Factor summary cards
+  - Tab 2: Metric Extraction table with evidence snippets and XBRL verification
+  - Tab 3: Statutory Accounting Integrity Tie-Outs matrix
+  - Tab 4: Senior Auditor Review Queue with Approve/Reject/Override actions + grounded Auditor Q&A Chat
+  - Tab 5: Pre-Audit Report with Executive Summary, Metrics concordance table, Tie-Out summary, and Print/Export
+- **Comprehensive Test Suite:** 15/15 tests passing across API health, SEC client, XBRL service, statement upload, and extraction accuracy benchmark.
+
 ## [1.1.0-phase2] - 2026-11-12 - Phase 2: SEC Filing Ingestion & XBRL Ground Truth
 
 ### Added

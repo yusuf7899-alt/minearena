@@ -126,7 +126,10 @@ class SECClient:
             with open(cache_file, "r", encoding="utf-8") as f:
                 return json.load(f)
 
-        url = f"https://data.sec.gov/submissions/CIK{cik_padded}.json"
+        url = (
+            f"{settings.SEC_BASE_URL.rstrip('/')}/submissions/CIK"
+            f"{cik_padded}.json"
+        )
         res = self._get(url)
         data = res.json()
 
@@ -173,7 +176,10 @@ class SECClient:
             primary_doc = primary_docs[i]
             raw_cik = str(int(cik))
             acc_nodash = acc_num.replace("-", "")
-            doc_url = f"https://www.sec.gov/Archives/edgar/data/{raw_cik}/{acc_nodash}/{primary_doc}"
+            doc_url = (
+                f"{settings.SEC_ARCHIVES_URL.rstrip('/')}/data/{raw_cik}/"
+                f"{acc_nodash}/{primary_doc}"
+            )
             doc_size = sizes[i] if i < len(sizes) else 0
 
             candidates.append({
@@ -217,7 +223,10 @@ class SECClient:
         if not force_refresh and cache_path.exists() and cache_path.stat().st_size > 0:
             return cache_path
 
-        doc_url = f"https://www.sec.gov/Archives/edgar/data/{raw_cik}/{acc_nodash}/{primary_document}"
+        doc_url = (
+            f"{settings.SEC_ARCHIVES_URL.rstrip('/')}/data/{raw_cik}/"
+            f"{acc_nodash}/{primary_document}"
+        )
         logger.info(f"Downloading primary 10-K document from {doc_url}")
         res = self._get(doc_url)
 
@@ -237,7 +246,10 @@ class SECClient:
             with open(cache_file, "r", encoding="utf-8") as f:
                 return json.load(f)
 
-        url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik_padded}.json"
+        url = (
+            f"{settings.SEC_BASE_URL.rstrip('/')}/api/xbrl/companyfacts/"
+            f"CIK{cik_padded}.json"
+        )
         res = self._get(url)
         data = res.json()
 
@@ -248,4 +260,3 @@ class SECClient:
 
 # Singleton default instance
 sec_client = SECClient()
-

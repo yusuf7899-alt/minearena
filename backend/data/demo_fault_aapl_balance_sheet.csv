@@ -1,0 +1,10 @@
+Line Item,Amount,Period Ended,Unit,Notes
+Total Net Sales,416161000000,2024-09-28,USD,Consolidated Statement of Operations
+Gross Margin,195201000000,2024-09-28,USD,Operating Performance
+Operating Income,133050000000,2024-09-28,USD,Earnings before interest and taxes
+Net Income,112010000000,2024-09-28,USD,Net earnings transferred to retained earnings
+Total Assets,374241000000,2024-09-28,USD,FAULT INJECTED: Overstated by $15.00B (Original was 359241000000)
+Total Liabilities,285508000000,2024-09-28,USD,Consolidated Balance Sheet
+Total Stockholders' Equity,73733000000,2024-09-28,USD,Shareholders Equity
+Cash and Cash Equivalents,35934000000,2024-09-28,USD,Ending Cash Balance
+Net Cash from Operating Activities,111482000000,2024-09-28,USD,Operating Cash Flow

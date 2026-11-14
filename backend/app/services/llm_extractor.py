@@ -53,8 +53,41 @@ Strict rules:
 {sanitized_context}
 </untrusted_filing_context>
 """
-        # If API key is present, we could invoke requests or client.
-        # Deterministic regex fallback ensures 100% offline reliability for demo & CI.
+        # If API key is present, invoke Google Gemini with quarantined prompt
+        if self.api_key:
+            try:
+                import httpx
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={self.api_key}"
+                payload = {
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "generationConfig": {
+                        "temperature": 0.0,
+                        "responseMimeType": "application/json"
+                    }
+                }
+                res = httpx.post(url, json=payload, timeout=12.0)
+                if res.status_code == 200:
+                    data = res.json()
+                    candidates = data.get("candidates", [])
+                    if candidates:
+                        text_resp = candidates[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+                        parsed = json.loads(text_resp)
+                        if parsed.get("found") and parsed.get("value") is not None:
+                            val = float(parsed["value"]) * scale_hint
+                            return LLMExtractionResult(
+                                concept=concept,
+                                value=val,
+                                raw_text=str(parsed.get("raw_text", parsed["value"])),
+                                scale="millions" if scale_hint == 1_000_000 else "exact",
+                                evidence_snippet=parsed.get("evidence_snippet", "Extracted via Gemini"),
+                                method="gemini_llm",
+                                citation=f"Gemini gemini-3-flash-preview extraction",
+                                found=True
+                            )
+            except Exception as ex:
+                logger.warning(f"Gemini extraction fallback: {ex}")
+
+        # Deterministic regex fallback ensures 100% reliability
         return self._heuristic_fallback_extraction(concept, statement_text, fiscal_year, scale_hint)
 
     def _heuristic_fallback_extraction(
@@ -107,3 +140,4 @@ Strict rules:
         )
 
 llm_extractor = LLMExtractor()
+

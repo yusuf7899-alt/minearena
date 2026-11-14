@@ -2,55 +2,49 @@
 
 @layer base {
   :root {
-    /* Brand Navy Foundation */
-    --moneta-navy-950: #070f1e;
-    --moneta-navy-900: #0b192c;
-    --moneta-navy-800: #1e3e62;
-    --moneta-navy-700: #2e5077;
-    --moneta-navy-600: #3e6b99;
+    /* Primary Reference Fintech Tokens */
+    --navy-900: #273869;
+    --navy-800: #405881;
+    --navy-700: #56729F;
+    --navy-100: #E8EEF5;
+    
+    /* Neutral Grays */
+    --gray-50: #EDF1F4;
+    --gray-100: #E2E7EC;
+    --gray-200: #CBD5E1;
+    --gray-300: #94A3B8;
+    --gray-400: #64748B;
+    --gray-900: #0F172A;
 
-    /* Restrained Institutional Accent (Gold / Bronze) */
-    --moneta-gold-500: #c5a880;
-    --moneta-gold-400: #d8bf9d;
-    --moneta-gold-100: #f5efe6;
-    --moneta-gold-50:  #faf7f2;
+    /* Single Brand Red Accent */
+    --accent-red: #D94B1E;
+    --accent-red-hover: #C53F15;
+    --accent-red-light: #FDF2EE;
+    --accent-red-border: #F8B49B;
 
-    /* Neutral Workpaper Canvas */
-    --moneta-canvas:    #f8fafc;
-    --moneta-surface:   #ffffff;
-    --moneta-border:    #e2e8f0;
-    --moneta-border-subtle: #f1f5f9;
-    --moneta-text-primary: #0f172a;
-    --moneta-text-secondary: #64748b;
-    --moneta-text-muted: #94a3b8;
+    /* Semantic Status Tokens */
+    --status-pass-bg: #F0FDF4;
+    --status-pass-border: #86EFAC;
+    --status-pass-text: #15803D;
 
-    /* Semantic Accounting Status Tokens */
-    --status-pass-bg:     #ecfdf5;
-    --status-pass-border: #a7f3d0;
-    --status-pass-text:   #065f46;
+    --status-fail-bg: #FEF2F2;
+    --status-fail-border: #FCA5A5;
+    --status-fail-text: #B91C1C;
 
-    --status-warn-bg:     #fffbeb;
-    --status-warn-border: #fde68a;
-    --status-warn-text:   #92400e;
+    --status-warn-bg: #FFFBEB;
+    --status-warn-border: #FCD34D;
+    --status-warn-text: #B45309;
 
-    --status-fail-bg:     #fff1f2;
-    --status-fail-border: #fecdd3;
-    --status-fail-text:   #9f1239;
-
-    --status-derived-bg:     #eef2ff;
-    --status-derived-border: #c7d2fe;
-    --status-derived-text:   #3730a3;
-
-    /* Typography */
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', 'Roboto Mono', 'SFMono-Regular', Menlo, monospace;
-    --font-serif: 'Newsreader', 'Georgia', 'Cambria', serif;
+    --radius-xs: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-btn: 12px;
   }
 
   body {
-    background-color: var(--moneta-canvas);
-    color: var(--moneta-text-primary);
-    font-family: var(--font-sans);
+    background-color: var(--gray-50);
+    color: var(--navy-900);
+    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
@@ -58,26 +52,64 @@
   }
 }
 
-/* Financial Ledger Utilities */
+/* Typography Classes */
+.font-serif-accent {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
 .tabular-nums {
-  font-family: var(--font-mono);
+  font-family: 'JetBrains Mono', monospace;
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-.report-heading {
-  font-family: var(--font-serif);
+/* Custom Soft Low-Contrast Shadows from Reference Screenshots */
+.shadow-soft-sm {
+  box-shadow: 0 2px 8px -2px rgba(39, 56, 105, 0.04), 0 1px 3px -1px rgba(39, 56, 105, 0.02);
 }
 
-.accounting-number {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums lining-nums;
-  text-align: right;
+.shadow-soft-md {
+  box-shadow: 0 8px 24px -4px rgba(39, 56, 105, 0.06), 0 2px 8px -2px rgba(39, 56, 105, 0.03);
 }
 
-.highlight-snippet {
-  background-color: var(--moneta-gold-100);
-  border: 1px solid var(--moneta-gold-500);
-  padding: 1px 4px;
-  border-radius: 2px;
+.shadow-soft-lg {
+  box-shadow: 0 16px 36px -6px rgba(39, 56, 105, 0.08), 0 4px 12px -2px rgba(39, 56, 105, 0.04);
+}
+
+/* Hairline Border */
+.border-hairline {
+  border: 1px solid rgba(64, 88, 129, 0.12);
+}
+
+.border-hairline-dark {
+  border: 1px solid rgba(64, 88, 129, 0.22);
+}
+
+/* Red CTA Button Style */
+.btn-brand-primary {
+  background-color: var(--accent-red);
+  color: #FFFFFF;
+  border-radius: var(--radius-btn);
   font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-brand-primary:hover {
+  background-color: var(--accent-red-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px -2px rgba(217, 75, 30, 0.35);
+}
+
+/* Navy Secondary Button */
+.btn-navy-secondary {
+  background-color: #FFFFFF;
+  color: var(--navy-900);
+  border: 1px solid rgba(64, 88, 129, 0.2);
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-navy-secondary:hover {
+  background-color: #F8FAFC;
+  border-color: var(--navy-800);
 }

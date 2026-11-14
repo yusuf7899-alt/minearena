@@ -25,3 +25,4 @@ for f in cache_dir.glob("*.htm"):
     for kw in ["Total revenue", "Revenues", "Net sales", "Revenue from Contract"]:
         m = re.search(re.escape(kw), content, re.IGNORECASE)
         print(f"Keyword '{kw}': {'FOUND at ' + str(m.start()) if m else 'NOT FOUND'}")
+

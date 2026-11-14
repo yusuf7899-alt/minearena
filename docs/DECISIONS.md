@@ -4,6 +4,13 @@ This document tracks all foundational engineering, design, and accounting decisi
 
 ---
 
+## ADR-007: External Integration Credentials Stay Backend-Side
+- **Status:** Accepted
+- **Context:** Gemini, SEC EDGAR, Supabase, Google OAuth, and optional provider settings need a consistent setup contract without exposing credentials or asserting provider connectivity based on environment values.
+- **Decision:** Load backend settings from `backend/.env` without overriding process environment variables; store secrets as masked secret values; ignore actual `.env` files; expose a readiness report that never emits values and reports connections as untested. Keep the frontend example limited to public Supabase URL and publishable-key values. SEC endpoints are configurable, while optional providers remain unconfigured unless explicitly supplied.
+
+---
+
 ## ADR-001: Separation of Research Baseline and Audit Fixes
 - **Status:** Accepted
 - **Context:** `research.md` contained 12 architectural and accounting gaps.
@@ -22,7 +29,12 @@ This document tracks all foundational engineering, design, and accounting decisi
 - **Context:** Querying `companyconcept` per metric causes repeated HTTP round-trips to SEC EDGAR, risking HTTP 429 throttling.
 - **Decision:** Moneta executes exactly one request to `https://data.sec.gov/api/xbrl/companyfacts/CIK{cik}.json` per company and caches the full JSON (~1–4 MB) in `backend/data/cache/xbrl/`. All 9 core metrics and subsequent tie-out references query this local cache.
 
-## ADR-004: Robust Fiscal Period Matching Bypassing CY Frames
-- **Status:** Accepted (Phase 2)
-- **Context:** Many companies (Apple with late September year-end, Microsoft with June 30 year-end) omit `frame == "CY{year}"` on major concepts in EDGAR XBRL.
-- **Decision:** Fact matching exclusively filters by `fact.form in ["10-K", "10-K/A"]`, `fact.fp == "FY"`, and `fact.fy == target_fiscal_year`. For instant balance sheet items, date proximity to the filing's report date is validated. When both original and amended filings exist, 10-K/A entries with the latest `filed` date take precedence.
+## ADR-005: Unified Demo Analysis Endpoint (`/api/analyze`)
+- **Status:** Accepted (Demo)
+- **Context:** Judges require a responsive, one-click end-to-end demo that processes filings instantaneously without fragile multi-step manual setup.
+- **Decision:** Implemented `POST /api/analyze` combining CIK resolution, local caching/EDGAR fetch, HTML metric extraction, statutory tie-outs, confidence scoring, and error injection into a single deterministic payload returned directly to the React workbench.
+
+## ADR-006: Seeded Error Injection Design for Real-Time Anomaly Proof
+- **Status:** Accepted (Demo)
+- **Context:** Real SEC 10-K filings have already been audited and mathematically balance. A demo showing 100% clean passes does not prove that anomaly detection, escalation, and human-in-the-loop review work.
+- **Decision:** Built a toggleable seeded error injection mechanism with 3 realistic financial corruption scenarios (Balance Sheet Tamper, Gross Profit Margin Understatement, Retained Earnings Leak). Injected corruption triggers real material misstatement warnings, failing statutory tie-outs and auto-escalating affected items to human review.

@@ -59,3 +59,4 @@ for t in rev_tags:
         scale = int(t.get("scale", 0))
         val = float(t.text.replace(",", "")) * (10 ** scale)
         print(f"  Context {cid} ({p['start']} to {p['end']}): ${val:,.2f}")
+
